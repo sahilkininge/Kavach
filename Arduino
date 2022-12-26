@@ -1,0 +1,69 @@
+#include <LiquidCrystal.h>
+          const int AOUTpin=0;
+          const int DOUTpin=8;
+          const int ledPin=12;
+          const int keyPin=11;
+          
+      LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
+      
+      int limit;
+      int value;
+      
+      void setup() 
+      {
+              lcd.begin(16, 2);
+              lcd.print("      KLE");
+              lcd.setCursor(0, 1);
+              lcd.print("    COLLEGE");
+              delay(4000);
+              lcd.clear();
+              lcd.setCursor(1, 0);
+              lcd.print("SAFETY VEHICAL ");
+              lcd.setCursor(0, 1);
+              lcd.print("WITH ALCHOLE DECT");
+               delay(4000);
+              lcd.clear();
+
+          Serial.begin(115200);
+          pinMode(DOUTpin, INPUT);
+          pinMode(ledPin, OUTPUT);
+          pinMode(keyPin, OUTPUT);
+      }
+      
+      void loop()
+      {
+                       lcd.setCursor(1, 0);
+                       lcd.print("ALCOHOL MONITORING");
+
+          value= analogRead(AOUTpin);
+          limit= digitalRead(DOUTpin);
+          Serial.print("Alcohol value: ");
+          Serial.println(value);
+          Serial.print("Limit: ");
+          Serial.print(limit);
+   
+                       delay(3000);
+                       lcd.clear();
+          if(value>500)
+                  {
+                  digitalWrite(ledPin, HIGH);
+                       lcd.setCursor(1, 0);
+                       lcd.print("   DETECTED");
+                  digitalWrite(keyPin, LOW);
+                       lcd.setCursor(0, 1);
+                       lcd.print(" VEHICAL LOCKED");
+                       delay(2000);
+                  }
+            else
+                  {
+                  digitalWrite(ledPin, LOW);
+                       lcd.setCursor(1, 0);
+                       lcd.print(" NOT DETECTED");
+                  digitalWrite(keyPin, HIGH);
+                       lcd.setCursor(0, 1);
+                       lcd.print("VEHICAL UNLOCKED");
+                        delay(2000);
+                           lcd.clear();
+                  }
+
+                  }
